@@ -27,16 +27,17 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
-        
-        Dictinory::create([
-            'word' => $request->word,
-            'definition' => $request->definition,
-            'example' => $request->example,
-            'translation' => $request->translation,
-            'example_translation' => $request->example_translation,
-            'pronunciation' => $request->pronunciation,
-            'level_id' => $request->level_id,
+        $validated = $request->validate([
+            'word' => 'required|string|max:255',
+            'definition' => 'required',
+            'example' => 'required|string|max:255',
+            'translation' => 'required|string|max:255',
+            'example_translation' => 'required|string|max:255',
+            'pronunciation' => 'required|string|max:255',
+            'level_id' => 'required|exists:levels,id',
         ]);
+        
+        Dictinory::create($validated);
 
         return redirect()->route('home.index')->with('success', 'Word added successfully');
     }

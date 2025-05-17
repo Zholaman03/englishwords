@@ -19,11 +19,16 @@
 
             <div class="auth-buttons">
                 @guest
-                    <a href="{{ route('auth.login') }}" class="btn btn-outline-primary me-2">Кіру</a>
+                    <a href="{{ route('login') }}" class="btn btn-outline-primary me-2">Кіру</a>
                     <a href="{{ route('auth.registr') }}" class="btn btn-primary">Тіркелу</a>
                 @else
                     <a href="{{ route('auth.logout') }}" class="btn btn-outline-danger me-2">Шығу</a>
-                    <span class="text-muted"><a href="{{ route('admin.index') }}">{{ Auth::user()->name }}</a></span>
+                    @if(Auth::user()->role->name == 'admin')
+                        <a href="{{ route('admin.index') }}" class="btn btn-outline-secondary">Admin</a>
+                    @elseif(Auth::user()->role->name == 'user')
+                        <a href="{{ route('user.profile') }}" class="btn btn-outline-secondary">Профиль</a>
+                    @endif
+                    
                 @endguest
             </div>
                 

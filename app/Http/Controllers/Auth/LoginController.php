@@ -15,6 +15,7 @@ class LoginController extends Controller
 
     public function loginPost(Request $request){
         
+        
         $auth = Auth::attempt([
             'email' => $request->email,
             'password' => $request->password
