@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
+
+    public function savedWords()
+    {
+        return $this->belongsToMany(Dictinory::class, 'saved_words')->withTimestamps();
+    }
 }

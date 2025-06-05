@@ -23,4 +23,9 @@ class Dictinory extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function savedByUsers()
+    {
+        return $this->belongsToMany(User::class, 'saved_words')->withTimestamps();
+    }
 }

@@ -8,5 +8,16 @@
 <body>
     UserProfile
     <h2>{{ Auth::user()->name }}</h2>
+
+    <ul>
+        @foreach ($savedWords as $word)
+        <li>{{ $word->word }}</li>
+        @endforeach
+    </ul>
+    <ul>
+        @foreach ( $users as $user)
+        <li>{{ $user->name }}</li>
+        @endforeach
+    </ul>
 </body>
 </html>

@@ -25,6 +25,8 @@ Route::post('/test', [HomeController::class, 'check'])->name('home.checkTest');
 Route::middleware(['auth', 'hasrole:user'])->group(function () {
     Route::get('/profile', [UserController::class, 'index'])->name('user.profile');
     
+    //save word
+    Route::post('/save/{id}', [UserController::class, 'save'])->name('user.save');
 });
 
 //admin
