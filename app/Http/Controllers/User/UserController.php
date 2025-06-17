@@ -16,6 +16,17 @@ class UserController extends Controller
         return view('users.profile', compact('savedWords', 'users'));
     }
 
+    public function words()
+    {
+        $user = Auth::user();
+        $savedWords = $user->savedWords()->paginate(10);
+        return view('users.mydicts', compact('savedWords'));
+    }
+
+    public function users(){
+        $users = User::all();
+        return view('users.usersChat', compact('users'));
+    }
     public function save($id)
     {
         $user = Auth::user();
