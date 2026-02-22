@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\AdminWordController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\User\FlashCardController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegistrController;
@@ -23,6 +24,9 @@ Route::post('/test', [HomeController::class, 'check'])->name('home.checkTest');
 //user
 
 Route::middleware(['auth', 'hasrole:user'])->group(function () {
+    Route::get('/flashcard/{id}', [FlashCardController::class, 'index'])->name('user.flashcard');
+
+    Route::post('/flashcard/{id}/check', [FlashCardController::class, 'check'])->name('flashcard.check');
     Route::get('/profile', [UserController::class, 'index'])->name('user.profile');
     Route::get('/profile/words', [UserController::class, 'words'])->name('user.words');
     Route::get('/profile/listUsers', [UserController::class, 'users'])->name('user.listUsers');

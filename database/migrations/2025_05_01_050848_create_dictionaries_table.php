@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dictinories', function (Blueprint $table) {
+        Schema::create('dictionaries', function (Blueprint $table) {
             $table->id();
             $table->string('word')->unique();
             $table->text('definition');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dictinories');
+        Schema::dropIfExists('dictionaries');
     }
 };

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Dictinory;
+use App\Models\Dictionary;
 use App\Models\Level;
 class HomeController extends Controller
 {
     //
     public function index()
     {
-        $words = Dictinory::all();
+        $words = Dictionary::all();
         
         
         return view('index', compact('words'));
@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function show($id)
     {
         
-        $word = Dictinory::find($id);
+        $word = Dictionary::find($id);
         if (!$word) {
             return redirect()->route('notFound');
         }
@@ -29,7 +29,7 @@ class HomeController extends Controller
     public function level($id)
     {
         
-        $words = Dictinory::where('level_id', $id)->get();
+        $words = Dictionary::where('level_id', $id)->get();
         $level_name = Level::where('id', $id)->first();
         
         if (!$words || !$level_name) {
@@ -43,12 +43,12 @@ class HomeController extends Controller
     {
         if (session()->has('word_id')) {
             $wordId = session('word_id');
-            $word = Dictinory::find($wordId);
+            $word = Dictionary::find($wordId);
             session()->forget('word_id'); // Бір рет қолданамыз да, өшіреміз
         } else {
-            $ids = Dictinory::pluck('id')->toArray();
+            $ids = Dictionary::pluck('id')->toArray();
             $randomIndex = rand(0, count($ids) - 1);
-            $word = Dictinory::find($ids[$randomIndex]);
+            $word = Dictionary::find($ids[$randomIndex]);
         }
     
         return view('engwords.test', compact('word'));
@@ -57,7 +57,7 @@ class HomeController extends Controller
     public function check(Request $request)
     {
       
-        $answer = Dictinory::where('id', $request->word_id)->first()->translation;
+        $answer = Dictionary::where('id', $request->word_id)->first()->translation;
        
         if(mb_strtolower(trim($request->answer), 'UTF-8') == mb_strtolower($answer) || str_contains(mb_strtolower($answer) , mb_strtolower(trim($request->answer), 'UTF-8'))){
             return redirect()->route('home.test')->with('success', 'Correct');

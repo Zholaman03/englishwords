@@ -23,7 +23,7 @@ class LoginController extends Controller
         if($auth){
             return redirect()->route('admin.index');
         }
-        return redirect()->back()->with('error', 'Invalid credentials');
+        return redirect()->back()->with('error', 'Қате логин немесе құпия сөз');
     }
 
     public function logout()

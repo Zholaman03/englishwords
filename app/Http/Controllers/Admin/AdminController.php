@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Dictinory;
+use App\Models\Dictionary;
 use App\Models\Level;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return (view('admins.profile'));
+        return view('admins.profile');
         
     }
 
@@ -37,24 +37,24 @@ class AdminController extends Controller
             'level_id' => 'required|exists:levels,id',
         ]);
         
-        Dictinory::create($validated);
+        Dictionary::create($validated);
 
-        return redirect()->route('home.index')->with('success', 'Word added successfully');
+        return redirect()->route('home.index')->with('success', 'Сәтті қосылды!');
     }
 
     public function edit($id)
     {
-        $dictinory = Dictinory::findOrFail($id);
+        $dictionary = Dictionary::findOrFail($id);
         
         $levels = Level::all();
-        return view('admins.edit', compact('dictinory', 'levels'));
+        return view('admins.edit', compact('dictionary', 'levels'));
     }
 
     public function update(Request $request, $id)
     {
-        $dictinory = Dictinory::findOrFail($id);
+        $dictionary = Dictionary::findOrFail($id);
         
-        $dictinory->update([
+        $dictionary->update([
             'word' => $request->word,
             'definition' => $request->definition,
             'example' => $request->example,
@@ -64,15 +64,15 @@ class AdminController extends Controller
             'level_id' => $request->level_id,
         ]);
 
-        return redirect()->route('home.index')->with('success', 'Word updated successfully');
+        return redirect()->route('home.index')->with('success', 'Сәтті жаңартылды!');
     }
 
 
     public function destroy($id)
     {
-        $dictinory = Dictinory::findOrFail($id);
-        $dictinory->delete();
+        $dictionary = Dictionary::findOrFail($id);
+        $dictionary->delete();
 
-        return redirect()->route('home.index')->with('success', 'Word deleted successfully');
+        return redirect()->route('home.index')->with('success', 'Сәтті жойылды!');
     }
 }

@@ -27,6 +27,6 @@ class RegistrController extends Controller
             'password' => bcrypt($validated['password']),
         ]);
 
-        return redirect()->route('home.index')->with('success', 'User registered successfully');
+        return redirect()->route('home.index')->with('success', 'Сәтті тіркелдіңіз!');
     }
 }

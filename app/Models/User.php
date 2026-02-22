@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Role;
+use App\Models\Dictionary;
+use App\Models\WordProgress;
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -54,6 +56,11 @@ class User extends Authenticatable
 
     public function savedWords()
     {
-        return $this->belongsToMany(Dictinory::class, 'saved_words')->withTimestamps();
+        return $this->belongsToMany(Dictionary::class, 'saved_words')->withTimestamps();
+    }
+
+    public function wordProgress()
+    {
+        return $this->hasMany(WordProgress::class);
     }
 }

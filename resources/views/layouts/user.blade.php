@@ -55,6 +55,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ route('user.flashcard', 1) }}">
+                                Флешкарта
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white" href="{{ route('admin.trashedWords') }}">
                                 Жойылған сөздер
                             </a>

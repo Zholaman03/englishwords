@@ -7,7 +7,7 @@ use App\Models\Dictionary;
 class Level extends Model
 {
     //
-    public function dictinory()
+    public function dictionary()
     {
         return $this->hasMany(Dictionary::class);
     }
