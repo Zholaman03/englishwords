@@ -1,29 +1,52 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container mt-4">
-        <h4 class="mb-4">Тест</h4>
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @elseif(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
+    <div class="top">
+        <div>
+            <div class="brand">EnglishApp • Training</div>
+            <div class="muted">Тіркелусіз. Әр деңгейден рандомды түрде 5 сөзден тұратын тест</div>
+        </div>
+        <div class="pill">
+            <span class="muted">Сұрақ №:</span> <strong id="step_word">1</strong>
+            <span class="muted">Correct:</span> <strong id="correct">0</strong>
+            <span class="muted">Қате:</span> <strong id="wrong">0</strong>
+        </div>
+    </div>
 
-        <form action="{{ route('home.checkTest') }}" method="POST" class="border p-3 rounded shadow-sm" style="max-width: 500px; font-size: 0.9rem;">
-            @csrf
-            <div class="mb-2">
-                <input type="hidden" name="word_id" value="{{ $word->id }}">
-                <h5 class="text-primary">{{ $word->word }}</h5>
-            </div>
-            <div class="mb-2">
-                
-                <input type="text" placeholder="ЖАУАБЫ" class="form-control form-control-sm" id="word" name="answer" required>
+    <div class="progress" aria-label="progress">
+        <div class="bar" id="bar"></div>
+    </div>
+    <div class="muted" style="margin:8px 0 14px;"><span id="pos">1</span>/<span id="total"></span> тапсырма</div>
+    <div class="card">
+        <div class="row">
+            <div class="q">
+                <div class="muted">Сөз (EN)</div>
+                <h2 id="word_translation">...</h2>
+                <div class="sub muted">
+                    <span>KK: <span id="kk"></span></span>
+
+                </div>
             </div>
 
-            <button type="submit" class="btn btn-sm btn-primary">Тестті өткізу</button>
-        </form>
+
+            <div class="input">
+                <label for="answer">Жауабың (EN)</label>
+
+                <input id="answer" autocomplete="off" placeholder="Жазыңыз: apple" name="answer" required />
+                <div class="btns">
+                    <button class="primary" type="submit" id="checkBtn">Тексеру</button>
+
+                </div>
+                <div class="feedback" id="feedback">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="meta muted">
+            <div id="restart" style="cursor:pointer;">Қайта бастау</div>
+            <div>@itechAtyrau</div>
+        </div>
     </div>
 @endsection

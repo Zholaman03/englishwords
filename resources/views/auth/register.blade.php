@@ -15,7 +15,7 @@
                         <h4>Register</h4>
                     </div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('auth.registr') }}">
+                        <form method="POST" action="{{ route('auth.registerPost') }}">
                             @csrf
                             @if ($errors->any())
                                 <div class="alert alert-danger">

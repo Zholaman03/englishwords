@@ -12,16 +12,13 @@ class AdminController extends Controller
     public function index()
     {
         return view('admins.profile');
-        
     }
 
     public function create()
     {
-       
         $levels = Level::all();
         return view('admins.create', [
             'levels' => $levels,
-
         ]);
     }
 
@@ -39,7 +36,7 @@ class AdminController extends Controller
         
         Dictionary::create($validated);
 
-        return redirect()->route('home.index')->with('success', 'Сәтті қосылды!');
+        return redirect()->back()->with('success', 'Сәтті қосылды!');
     }
 
     public function edit($id)

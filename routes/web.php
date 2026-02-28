@@ -4,37 +4,36 @@
 use App\Http\Controllers\Admin\AdminWordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\FlashCardController;
-use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\RegistrController;
-
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\User\UserController;
 
-
+// Главная страница и страницы с деталями слов
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/detail/{id}', [HomeController::class, 'show'])->name('home.show');
 Route::get('/level/{id}', [HomeController::class, 'level'])->name('home.level');
-
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
-Route::post('/test', [HomeController::class, 'check'])->name('home.checkTest');
 
 
-//user
-
+// Пользовательские маршруты
 Route::middleware(['auth', 'hasrole:user'])->group(function () {
     Route::get('/flashcard/{id}', [FlashCardController::class, 'index'])->name('user.flashcard');
-
     Route::post('/flashcard/{id}/check', [FlashCardController::class, 'check'])->name('flashcard.check');
     Route::get('/profile', [UserController::class, 'index'])->name('user.profile');
     Route::get('/profile/words', [UserController::class, 'words'])->name('user.words');
     Route::get('/profile/listUsers', [UserController::class, 'users'])->name('user.listUsers');
-    //save word
+ 
+
+});
+
+Route::middleware(['auth'])->group(function () {
     Route::post('/save/{id}', [UserController::class, 'save'])->name('user.save');
 });
 
-//admin
+
+// Админские маршруты
 Route::middleware(['auth', 'hasrole:admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/words', [AdminWordController::class, 'words'])->name('admin.words');
@@ -47,9 +46,9 @@ Route::middleware(['auth', 'hasrole:admin'])->group(function () {
 
 });
 
-//auth
+// Аутентификация
 Route::get('/login', [LoginController::class, 'login'])->name('login');
-Route::get('/registr', [RegistrController::class, 'registr'])->name('auth.registr');
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/login', [LoginController::class, 'loginPost'])->name('auth.loginPost');
-Route::post('/registr', [RegistrController::class, 'registrPost'])->name('auth.registrPost');
+Route::post('/register', [RegisterController::class, 'registerPost'])->name('auth.registerPost');
 Route::get('/logout', [LoginController::class, 'logout'])->name('auth.logout');

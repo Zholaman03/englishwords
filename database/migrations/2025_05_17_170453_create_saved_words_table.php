@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('saved_words', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('dictinory_id')->constrained()->onDelete('cascade');
+            $table->foreignId('dictionary_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

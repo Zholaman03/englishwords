@@ -1,7 +1,7 @@
 
 const gptQuestion = document.getElementById('gpt-question');
 
-document.querySelectorAll('#main-btns li[data-type]').forEach(element => {
+document.querySelectorAll('#main-btns button[data-type]').forEach(element => {
     element.addEventListener('click', function() {
         
         gptQuestion.value = this.textContent.trim();
@@ -36,3 +36,4 @@ gptQueryBtn.addEventListener('click', async function(event) {
     gptQueryBtn.disabled = false; // 👉 Пайдаланушының қайта сұрау жіберуіне мүмкіндік береміз
     
 });
+

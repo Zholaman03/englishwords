@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->timestamps();
         });
+
+        DB::table('roles')->insert([
+            ['name' => 'admin'],
+            ['name' => 'user'],
+        ]);
     }
 
     /**

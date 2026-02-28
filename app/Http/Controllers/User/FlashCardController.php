@@ -7,18 +7,18 @@ use App\Models\Dictionary;
 use App\Models\Level;
 use App\Models\WordProgress;
 use Illuminate\Support\Facades\DB;
-use Doctrine\Inflector\Rules\Word;
 use Illuminate\Http\Request;
 
 class FlashCardController extends Controller
 {
+
+    // Показать карточку слова и статистику по уровню
     public function index($id)
     {
         $word = Dictionary::inRandomOrder()
             ->where('level_id', $id)
             ->whereDoesntHave('users', fn($q) => $q->where('users.id', auth()->id())->where('word_progress.status', 'known'))
             ->first();
-        // dd($word);
         $count = Dictionary::where('level_id', $id)->count();
 
         $knownCount = DB::table('word_progress as uw')
@@ -32,6 +32,8 @@ class FlashCardController extends Controller
 
         return view('flashcard.flashcard', compact('word', 'levels', 'count', 'knownCount'));
     }
+
+    // Обновить статус слова (известно/неизвестно)
 
     public function check(Request $request)
     {

@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dictionary;
-use Illuminate\Http\Request;
+
 
 class AdminWordController extends Controller
 {
-    //
     public function words()
     {
         $words = Dictionary::paginate(5);
