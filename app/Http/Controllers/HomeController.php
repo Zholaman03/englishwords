@@ -7,14 +7,17 @@ use App\Models\Dictionary;
 use App\Models\Level;
 class HomeController extends Controller
 {
-    //
-    public function index()
+    // Показать главную страницу с английскими словами и уровнями сложности
+    public function index(Request $request)
     {
+       
         $words = Dictionary::all();
         
         
         return view('index', compact('words'));
     }
+
+    // Показать страницу с деталями слова
 
     public function show($id)
     {
@@ -26,6 +29,8 @@ class HomeController extends Controller
         return view('engwords.itemword', compact('word'));
     }
 
+
+    // Показать уровени сложности и слова для выбранного уровня
     public function level($id)
     {
         
@@ -39,32 +44,11 @@ class HomeController extends Controller
         return view('index', compact('words', 'level_name'));
     }
 
+    // Показать страницу 404 при отсутствии слова или уровня
     public function test()
     {
-        if (session()->has('word_id')) {
-            $wordId = session('word_id');
-            $word = Dictionary::find($wordId);
-            session()->forget('word_id'); // Бір рет қолданамыз да, өшіреміз
-        } else {
-            $ids = Dictionary::pluck('id')->toArray();
-            $randomIndex = rand(0, count($ids) - 1);
-            $word = Dictionary::find($ids[$randomIndex]);
-        }
-    
-        return view('engwords.test', compact('word'));
+
+        return view('engwords.test');
     }
 
-    public function check(Request $request)
-    {
-      
-        $answer = Dictionary::where('id', $request->word_id)->first()->translation;
-       
-        if(mb_strtolower(trim($request->answer), 'UTF-8') == mb_strtolower($answer) || str_contains(mb_strtolower($answer) , mb_strtolower(trim($request->answer), 'UTF-8'))){
-            return redirect()->route('home.test')->with('success', 'Correct');
-        } else {
-            return back()->with('error', 'Incorrect')->with('word_id', $request->word_id);
-        }
-       
-    }
-    
 }

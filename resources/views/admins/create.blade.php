@@ -2,6 +2,15 @@
 
 @section('content')
 <div class="container mt-4">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @elseif(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <h2 class="mb-4 text-center">Ағылшын тілінде сөздерді құру</h2>
     <form action="{{ route('admin.store') }}" method="POST" class="border p-4 rounded shadow-sm bg-light">
         {{-- CSRF token for security --}}
