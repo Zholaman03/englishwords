@@ -1,9 +1,13 @@
 @extends('layouts.app')
+
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
+@endpush
 @section('content')
     <div class="top">
         <div>
             <div class="brand">EnglishApp • Training</div>
-            <div class="muted">Тіркелусіз. Әр деңгейден рандомды түрде 5 сөзден тұратын тест</div>
+            <div class="muted">Тіркелусіз. Әр деңгейден рандомды түрде 10 сөзден тұратын тест</div>
         </div>
         <div class="pill">
             <span class="muted">Сұрақ №:</span> <strong id="step_word">1</strong>
@@ -46,7 +50,11 @@
 
         <div class="meta muted">
             <div id="restart" style="cursor:pointer;">Қайта бастау</div>
-            <div>@itechAtyrau</div>
+            <div> <a href="https://instagram.com/itech.atyrau" target="_blank">@itechAtyrau</a></div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/checkWord.js') }}"></script>
+@endpush

@@ -16,20 +16,29 @@ Route::get('/detail/{id}', [HomeController::class, 'show'])->name('home.show');
 Route::get('/level/{id}', [HomeController::class, 'level'])->name('home.level');
 Route::get('/test', [HomeController::class, 'test'])->name('home.test');
 
+Route::get('/userprofile', function () {
+    return view('layouts.userprofile');
+})->name('user.profile123');
+
+// искать слова
+Route::get('/search', [HomeController::class, 'search'])->name('home.search');
+
 
 // Пользовательские маршруты
 Route::middleware(['auth', 'hasrole:user'])->group(function () {
     Route::get('/flashcard/{id}', [FlashCardController::class, 'index'])->name('user.flashcard');
     Route::post('/flashcard/{id}/check', [FlashCardController::class, 'check'])->name('flashcard.check');
+    Route::post('/flashcard', [FlashCardController::class, 'reset'])->name('flashcard.reset');
     Route::get('/profile', [UserController::class, 'index'])->name('user.profile');
     Route::get('/profile/words', [UserController::class, 'words'])->name('user.words');
     Route::get('/profile/listUsers', [UserController::class, 'users'])->name('user.listUsers');
- 
-
+    Route::put('/profile/edit', [UserController::class, 'editDataOfUser'])->name('user.edit');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('/save/{id}', [UserController::class, 'save'])->name('user.save');
+    Route::post('/favourite/{id}', [UserController::class, 'save'])->name('user.save');
+    Route::get('/favourites', [UserController::class, 'favourites'])->name('user.favourites');
+    Route::post('/favourites', [UserController::class, 'clearFavourites'])->name('user.clearFavourites');
 });
 
 

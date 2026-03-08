@@ -5,10 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('css/flashcard.css') }}">
+
+    @stack('styles')
+   
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/test.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/itemword.css') }}">
+    
+      
 </head>
 
 <body>
@@ -18,11 +20,12 @@
                 <div class="brand">EnglishApp</div>
 
                 <nav class="nav" aria-label="Навигация">
-                    <a class="{{ request()->routeIs('home.index') ? 'active' : '' }}" href="{{ route('home.index') }}">📚 Слова</a>
-                    <a class="{{ request()->routeIs('home.test') ? 'active' : '' }}" href="{{ route('home.test') }}">🎯 Тренировка</a>
+                    <a class="{{ request()->routeIs('home.index') ? 'active' : '' }}" href="{{ route('home.index') }}">📚 Сөздіктер</a>
+                    <a class="{{ request()->routeIs('home.test') ? 'active' : '' }}" href="{{ route('home.test') }}">🎯 Аудармасын тап</a>
+                    <a class=" {{ request()->routeIs('user.flashcard') ? 'active' : '' }}" href="{{ route('user.flashcard', 1) }}">🃏 Өз өзіңді тексер</a>
                
-                    <a href="{{ route('user.words') }}">⭐ Избранное</a>
-                    <a href="#">ℹ О приложении</a>
+                    <a class="{{ request()->routeIs('user.favourites') ? 'active' : '' }}" href="{{ route('user.favourites') }}">⭐ Керек сөздіктерім</a>
+                
                 </nav>
 
                 <div class="spacer"></div>
@@ -30,11 +33,11 @@
                     <a href="{{ route('login') }}" class="btn">Кіру</a>
                     <a href="{{ route('register') }}" class="btn primary">Тіркелу</a>
                 @else
-                    <a href="{{ route('auth.logout') }}" class="btn btn-outline-danger me-2">Шығу</a>
+        
                     @if(Auth::user()->role->name == 'admin')
-                        <a href="{{ route('admin.index') }}" class="btn btn-outline-secondary">Admin</a>
+                        <a href="{{ route('admin.index') }}" class="btn btn-outline-secondary">Администратор</a>
                     @elseif(Auth::user()->role->name == 'user')
-                        <a href="{{ route('user.profile') }}" class="btn btn-outline-secondary">Профиль</a>
+                        <a href="{{ route('user.profile') }}" class="btn btn-outline-secondary">Жеке аккаунт</a>
                     @endif
                 @endguest
             
@@ -49,10 +52,8 @@
     </main>
 
 
-
-    <script src="{{ asset('js/script.js') }}"></script>
-    <script src="{{ asset('js/speech.js') }}"></script>
-    <script src="{{ asset('js/checkWord.js') }}"></script>
+    @stack('scripts')
+    
 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

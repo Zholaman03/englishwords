@@ -13,6 +13,13 @@ class ProfileUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'email' => strtolower($this->email),
+        ]);
+    }
     public function rules(): array
     {
         return [
@@ -24,6 +31,12 @@ class ProfileUpdateRequest extends FormRequest
                 'email',
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
+            ],
+            'password'=>[
+                'nullable',
+                'string',
+                'min:8',
+                'confirmed'
             ],
         ];
     }

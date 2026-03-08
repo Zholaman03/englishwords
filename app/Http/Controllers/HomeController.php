@@ -51,4 +51,11 @@ class HomeController extends Controller
         return view('engwords.test');
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $words = Dictionary::where('word', 'like', '%' . $query . '%')->get();
+        return view('index', compact('words'));
+    }
+
 }

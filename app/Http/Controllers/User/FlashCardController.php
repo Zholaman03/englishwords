@@ -30,7 +30,9 @@ class FlashCardController extends Controller
 
         $levels = Level::all();
 
-        return view('flashcard.flashcard', compact('word', 'levels', 'count', 'knownCount'));
+        $procent_known = $knownCount > 0 ? round(($knownCount / $count) * 100) : 0;
+        $procent_unknown = 100 - $procent_known;
+        return view('flashcard.flashcard', compact('word', 'levels', 'count', 'knownCount', 'procent_known', 'procent_unknown'));
     }
 
     // Обновить статус слова (известно/неизвестно)
@@ -52,5 +54,17 @@ class FlashCardController extends Controller
         );
         return redirect()->back();
         ;
+    }
+
+    // Сбросить прогресс по уровню
+    public function reset(Request $request){
+        $levelId = $request->input('level_id');
+        $wordIds = Dictionary::where('level_id', $levelId)->pluck('id');
+
+        WordProgress::where('user_id', auth()->id())
+            ->whereIn('dictionary_id', $wordIds)
+            ->delete();
+
+        return redirect()->back()->with('success', 'Прогресс по уровню сброшен!');
     }
 }
