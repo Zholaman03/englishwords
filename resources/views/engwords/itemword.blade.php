@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/itemword.css') }}">
+@endpush
 @section('content')
 
     <div class="card">
         <div class="breadcrumbs">
-            <a href="{{ route('home.index')  }}">← Барлық сөздер</a> <span class="muted">/</span> <span
+            <a href="{{ route('home.index')  }}">← Басты бет</a> <span class="muted">/</span> <span
                 id="crumbWord">addiction</span>
         </div>
 
@@ -12,40 +15,27 @@
             <div class="wordTitle">
                 <h1 id="wEn">{{ $word->word }}</h1>
                 <div class="meta">
-                    <span class="chip">Level: <span id="wLevel">{{ $word->level->name }}</span></span>
+                    <span class="chip">Деңгей: <span id="wLevel">{{ $word->level->name }}</span></span>
                     <span class="phon" id="wPhon">[{{ $word->pronunciation }}]</span>
                 </div>
             </div>
 
-            <div class="actionsTop">
-                <button class="mini primary" id="speakBtn" type="button">🔊 Тыңдау</button>
-                @if(Auth::check())
-                    <form action="{{ route('user.save', $word->id) }}" method="POST" class="mt-3">
-                        @csrf
-                        <button type="submit"
-                            class="mini {{ Auth::user()->savedWords->contains($word->id) ? 'star active' : 'star' }}">
-                            {{ Auth::user()->savedWords->contains($word->id) ? 'Remove from Saved' : 'Save Word' }}
-                        </button>
-                    </form>
-                @endif
-               
-
-            </div>
+          
         </section>
 
         <section class="infoGrid" aria-label="Негізгі ақпарат">
             <div class="block">
-                <div class="label">📌 Definition</div>
+                <div class="label">📌 Түсініктеме</div>
                 <div class="value muted" id="wDef">{{ $word->definition }}</div>
             </div>
 
             <div class="block">
-                <div class="label">🧩 Example</div>
+                <div class="label">🧩 Мысал</div>
                 <div class="value" id="wEx">{{ $word->example }}</div>
             </div>
 
             <div class="block" style="grid-column: 1 / -1;">
-                <div class="label">🌍 Translation</div>
+                <div class="label">🌍 Аудармасы</div>
                 <div class="value" id="wKz">{{  $word->example_translation }}</div>
 
             </div>
@@ -75,3 +65,8 @@
 
     </div>
 @endsection
+
+@push('scripts')
+    
+    <script src="{{ asset('js/gptQuery.js') }}"></script>
+@endpush

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 // API маршрут для общения с GPT
 Route::post('/ask-gpt', [OpenAiController::class, 'askGPT']);
+Route::post('/chat-ai', [OpenAiController::class, 'chatAI']);
 
 // API маршруты для тестирования слов
 Route::get('/test', [TestApiController::class, 'index']);

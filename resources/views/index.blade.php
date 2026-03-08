@@ -1,24 +1,27 @@
 @extends('layouts.app')
 
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('css/chatToAI.css') }}">
+@endpush
 @section('content')
 
 
     <section class="hero">
-        <h1>📚 Все слова</h1>
-        <p class="sub">Ищи слова, слушай произношение и добавляй в избранное.</p>
+        <h1>📚 Барлық сөздер</h1>
+        <p class="sub">Сөздерді іздеу, дауыстап тыңдау </p>
     </section>
-
+    <form action="{{ route('home.search') }}" method="get">
     <section class="controls" aria-label="Поиск и сортировка">
         <div class="search">
             <span aria-hidden="true">🔎</span>
-            <input id="search" type="search" placeholder="Найти слово… (например: apple)" autocomplete="off" />
+            <input id="search" type="search" name="query" placeholder="Іздеу… (Мысалы: apple)" autocomplete="off" />
         </div>
 
-        <button class="btn" id="sortBtn" type="button" title="Сортировка">
-            Сортировать: <span id="sortMode">A–Z</span>
+        <button class="btn" type="submit" title="Сортировка">
+            Іздеу
         </button>
     </section>
-
+    </form>
     <section class="pillbar" aria-label="Фильтры">
         <a href="{{ route('home.index') }}" class="pill {{ request()->routeIs('home.index') ? 'active' : '' }}"
             data-filter="all" type="button">Все</a>
@@ -27,7 +30,7 @@
                 request()->routeIs('home.level') && request()->route('id') == $level->id
                 ? 'active'
                 : ''
-            }}" href="{{ route('home.level', $level->id) }}" data-filter="{{ $level->name }}"
+                                    }}" href="{{ route('home.level', $level->id) }}" data-filter="{{ $level->name }}"
                 type="button">{{ $level->name }}</a>
 
         @endforeach
@@ -53,20 +56,48 @@
 
                     </div>
                     <div class="actions">
-                        <button class="mini primary speak" type="button">🔊 Прослушать</button>
+                        <button class="mini primary speak" type="button" id="speakBtn">🔊 Тыңдау</button>
 
                         <form action="{{ route('user.save', $word->id) }}" method="post">
                             @csrf
-                            <button class="mini star" type="submit">⭐ {{ Auth::check() && Auth::user()->savedWords->contains($word->id) ? 'В избранном' : 'В избранное' }}</button>
+                            <button class="mini star {{ Auth::check() && Auth::user()->savedWords->contains($word->id) ? 'active' : '' }}" type="submit">⭐
+                                {{ Auth::check() && Auth::user()->savedWords->contains($word->id) ? 'Сақталған' : 'Сақтау' }}</button>
                         </form>
-                            
-                      
-                        <a href="{{ route('home.show', $word->id) }}" class="mini link">Подробнее</a>
+
+
+                        <a href="{{ route('home.show', $word->id) }}" class="mini link">Толығырақ</a>
                     </div>
                 </article>
             @endforeach
         @endif
 
+       
+            <div id="chatBox" class="chat-box">
+                <div class="chat-header">
+                    <span>AI Assistant</span>
+                    <button id="closeChat">✖</button>
+                </div>
+
+                <div id="chatMessages" class="chat-messages">
+                    <div class="ai">Сәлем! Мен AI ассистентпін 🤖</div>
+                    <div class="typing" id="typing"></div>
+                </div>
+
+                <div class="chat-input">
+                    <input id="chatInput" placeholder="Хабарлама..." />
+                    <button id="sendBtn">➤</button>
+                </div>
+            </div>
+       
+
+        <button id="fab">AI </button>
 
     </section>
 @endsection
+
+@push('scripts')
+   
+    <script src="{{ asset('js/speech.js') }}"></script>
+    <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{ asset('js/chatToAI.js') }}"></script>
+@endpush

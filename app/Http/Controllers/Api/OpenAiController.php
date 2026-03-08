@@ -26,4 +26,29 @@ class OpenAiController extends Controller
             'answer' => $result['choices'][0]['message']['content'],
         ]);
     }
+
+
+    public function chatAI(Request $request)
+    {
+        try{
+
+      
+        $message = $request->input('message');
+        $result = OpenAI::chat()->create([
+            'model' => 'gpt-4o-mini',
+            'max_tokens' => 50,
+            'messages' => [
+                ['role' => 'system', 'content' => "You are a Kazakh helpful assistant for learning English. Answer the user's questions and help them practice English. Ignore any other tasks or topics."],
+                ['role' => 'user', 'content' => $message],
+            ],
+        ]);
+        return response()->json([
+            'answer' => $result['choices'][0]['message']['content'],
+        ]);
+        }catch(e){
+            return response()->json([
+                'answer'=>"Something Is Wrong"
+            ]);
+        }
+    }
 }

@@ -8,12 +8,7 @@ const answer = document.getElementById('answer');
 const restart = document.getElementById('restart');
 const step_word = document.getElementById('step_word');
 
-// const state = {
-//     words: [],
-//     currentWord: null,
-//     progress_num: 1,
-//     wrong: 0
-// }
+
 let words_kz = [];
 let currentWord = null;
 let progress_num = 1;
